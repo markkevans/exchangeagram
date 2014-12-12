@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D362D301A3B007A00DC4F7A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D362D2F1A3B007A00DC4F7A /* MobileCoreServices.framework */; };
+		5D362D321A3B226A00DC4F7A /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D362D311A3B226A00DC4F7A /* FeedItem.swift */; };
 		5DAED5C91A3A066F0061B768 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAED5C81A3A066F0061B768 /* AppDelegate.swift */; };
 		5DAED5CC1A3A06700061B768 /* ExchangeAGram.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5DAED5CA1A3A066F0061B768 /* ExchangeAGram.xcdatamodeld */; };
 		5DAED5D11A3A06700061B768 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5DAED5CF1A3A06700061B768 /* Main.storyboard */; };
@@ -28,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5D362D2F1A3B007A00DC4F7A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		5D362D311A3B226A00DC4F7A /* FeedItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
 		5DAED5C31A3A066F0061B768 /* ExchangeAGram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExchangeAGram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DAED5C71A3A066F0061B768 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DAED5C81A3A066F0061B768 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D362D301A3B007A00DC4F7A /* MobileCoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +68,7 @@
 		5DAED5BA1A3A066F0061B768 = {
 			isa = PBXGroup;
 			children = (
+				5D362D2F1A3B007A00DC4F7A /* MobileCoreServices.framework */,
 				5DAED5C51A3A066F0061B768 /* ExchangeAGram */,
 				5DAED5DE1A3A06700061B768 /* ExchangeAGramTests */,
 				5DAED5C41A3A066F0061B768 /* Products */,
@@ -88,6 +94,7 @@
 				5DAED5D21A3A06700061B768 /* Images.xcassets */,
 				5DAED5D41A3A06700061B768 /* LaunchScreen.xib */,
 				5DAED5CA1A3A066F0061B768 /* ExchangeAGram.xcdatamodeld */,
+				5D362D311A3B226A00DC4F7A /* FeedItem.swift */,
 				5DAED5C61A3A066F0061B768 /* Supporting Files */,
 			);
 			path = ExchangeAGram;
@@ -167,6 +174,7 @@
 				TargetAttributes = {
 					5DAED5C21A3A066F0061B768 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = GXW788W9A9;
 					};
 					5DAED5DA1A3A06700061B768 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -221,6 +229,7 @@
 				5DAED5C91A3A066F0061B768 /* AppDelegate.swift in Sources */,
 				5DAED5EE1A3A09BC0061B768 /* FeedCell.swift in Sources */,
 				5DAED5EC1A3A07D80061B768 /* FeedViewController.swift in Sources */,
+				5D362D321A3B226A00DC4F7A /* FeedItem.swift in Sources */,
 				5DAED5CC1A3A06700061B768 /* ExchangeAGram.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,9 +355,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ExchangeAGram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -356,9 +368,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ExchangeAGram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -415,6 +430,7 @@
 				5DAED5E71A3A06700061B768 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5DAED5E81A3A06700061B768 /* Build configuration list for PBXNativeTarget "ExchangeAGramTests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +439,7 @@
 				5DAED5EA1A3A06700061B768 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
