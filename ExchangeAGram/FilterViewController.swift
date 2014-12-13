@@ -75,6 +75,30 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
     //UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+       
+        
+        createUIAlertController(indexPath)
+        
+        
+    }
+
+    func shareToFacebook (indexPath: NSIndexPath) {
+        let filterImage = self.filteredImageFromImage(self.thisFeedItem.image, filter: self.filters[indexPath.row])
+        
+        let photos:NSArray = [filterImage]
+        var params = FBPhotoParams()
+        params.photos = photos
+        
+        FBDialogs.presentShareDialogWithPhotoParams(params, clientState: nil) { (call, result, error) -> Void in
+            if (result? != nil) {
+                println(result)
+            } else {
+                println(error)
+            }
+        }
+    }
+
+    func saveFilterToCoreData(indexPath: NSIndexPath, caption: String) {
         let filterImage = self.filteredImageFromImage(self.thisFeedItem.image, filter: self.filters[indexPath.row])
         
         let imageData = UIImageJPEGRepresentation(filterImage, 1.0)
@@ -87,14 +111,14 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
         filterImage.drawInRect(CGRect(origin: CGPointZero, size: size))
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         let thumbnailData = UIImageJPEGRepresentation(scaledImage, 0.5)
-
         self.thisFeedItem.thumbnail = thumbnailData
-        
+        self.thisFeedItem.caption = caption
+
         (UIApplication.sharedApplication().delegate as AppDelegate).saveContext()
         self.navigationController?.popViewControllerAnimated(true)
-        
     }
-
+    
+    
     // Helper Functions
     func photoFilters() -> [CIFilter] {
         
@@ -141,6 +165,42 @@ class FilterViewController: UIViewController, UICollectionViewDataSource, UIColl
         return finalImage!
     }
     
+    //UIAlertController Helper Functions
+    
+    func createUIAlertController(indexPath: NSIndexPath) {
+        let alert = UIAlertController(title: "Photo options", message: "Please choose an option", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+            textField.placeholder = "Add Caption"
+            textField.secureTextEntry = false
+        }
+        
+        var text:String
+        
+        let textField = alert.textFields![0] as UITextField
+
+        let photoAction = UIAlertAction(title: "Post Photo Facebook with Caption", style: UIAlertActionStyle.Destructive) { (UIAlertAction) -> Void in
+
+            var text = textField.text
+            self.shareToFacebook(indexPath)
+            self.saveFilterToCoreData(indexPath, caption: text)
+        }
+        
+        alert.addAction(photoAction)
+            
+        let saveFilterAction = UIAlertAction(title: "Save Filter without posting on Facebook", style: UIAlertActionStyle.Default) { (UIAlertAction) -> Void in
+            var text = textField.text
+            self.saveFilterToCoreData(indexPath, caption: text)
+        }
+        alert.addAction(saveFilterAction)
+        
+        let cancelAction = UIAlertAction(title: "Select another Filter", style: UIAlertActionStyle.Cancel) { (UIAlertAction) -> Void in
+        }
+        alert.addAction(cancelAction)
+
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
     func cacheImage(imageNumber: Int) {
         let fileName = "\(imageNumber)\(thisFeedItem.image.length)"
         let uniquePath = tmp.stringByAppendingPathComponent(fileName)
