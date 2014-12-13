@@ -19,14 +19,15 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    }
 
+    override func viewDidAppear(animated: Bool) {
         let request = NSFetchRequest(entityName: "FeedItem")
         let appDelegate:AppDelegate = (UIApplication.sharedApplication().delegate as AppDelegate)
         let context:NSManagedObjectContext = appDelegate.managedObjectContext!
         
         feedArray = context.executeFetchRequest(request, error: nil)!
-        
-        
+        collectionView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -79,6 +80,16 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         let image = info[UIImagePickerControllerOriginalImage] as UIImage
         let imageData = UIImageJPEGRepresentation(image, 1.0)
         
+        let size = CGSizeApplyAffineTransform(image.size, CGAffineTransformMakeScale(150.00/image.size.width, 150.00/image.size.height))
+        let hasAlpha = false
+        let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
+        UIGraphicsBeginImageContextWithOptions(size, !hasAlpha, scale)
+        image.drawInRect(CGRect(origin: CGPointZero, size: size))
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        let thumbnailData = UIImageJPEGRepresentation(scaledImage, 0.5)
+        
+//        let thumbnailData = UIImageJPEGRepresentation(image, 0.1)
+        
         let managedObjectContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext
         
         let entityDescription = NSEntityDescription.entityForName("FeedItem", inManagedObjectContext: managedObjectContext!)
@@ -86,6 +97,7 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         let feedItem = FeedItem(entity: entityDescription!, insertIntoManagedObjectContext: managedObjectContext!)
         
         feedItem.image = imageData
+        feedItem.thumbnail = thumbnailData
         feedItem.caption = "test caption"
         
         (UIApplication.sharedApplication().delegate as AppDelegate).saveContext()
@@ -114,4 +126,17 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         cell.captionLabel.text = thisItem.caption
         return cell
     }
+
+
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let thisItem = feedArray[indexPath.row] as FeedItem
+        
+        var filterVC = FilterViewController()
+        filterVC.thisFeedItem = thisItem
+        
+        self.navigationController?.pushViewController(filterVC, animated: false)
+        
+    }
+    
+    
 }
